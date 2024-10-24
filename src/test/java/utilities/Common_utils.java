@@ -44,7 +44,6 @@ public class Common_utils {
 				
 				Constants.URL=properties.getProperty("url");
 				Constants.BROWSER=	properties.getProperty("browser");
-			
 			    Constants.USER= properties.getProperty("user");
 			    Constants.PASSWORD= properties.getProperty("password");
 			    
