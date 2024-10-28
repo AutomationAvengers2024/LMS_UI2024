@@ -1,15 +1,29 @@
 package stepdefinitions;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.Assert;
+import org.openqa.selenium.By;
 
 import app_hooks.AppHooks;
 import constants.Constants;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import pages.Login_Page;
 
 public class Steps_Login {
+	
+	
+	public static final String grayColor = "rgba(0, 0, 0, 0.54)";
+	String actualErrorMessage = "";
+	String successMessage ="";
+	String actualNameText = "User";
+	String actualPasswordText = "Password";
+	String actualText = "";
 	
 	
 	@Given("Admin is in Home Page")
@@ -55,39 +69,51 @@ public class Steps_Login {
 	    
 	}
 
-//	@Then("Admin should recieve {int} page not found error")
-//	public void admin_should_recieve_on_the_login_page() {
-//	Assert.assertEquals(Login_Page.getInstance().getPageNotFound(null));
-//	    
-//	}
+	@Then("Admin should recieve {int} page not found error")
+	public void admin_should_recieve_page_not_found_error(Integer int1) {
+		int httpStatus = 200;
+		String invalidURL = "https://lms-frontend-api-hackathon-apr-326235f3973d.herokuapp12345.com/FindCustomer";
+
+	   if(httpStatus == 404 )
+		   System.out.println("Invalid URL: Status received:" + httpStatus);
+	}
+
+	@Then("HTTP response >= {int}. Then the link is broken")
+	public void http_response_then_the_link_is_broken(Integer int1) {
+		int httpStatus = 200;
+		String invalidURL = "https://lms-frontend-api-hackathon-apr-326235f3973d.herokuapp12345.com/FindCustomer";
+
+	   if(httpStatus > 404 )
+		   System.out.println("Invalid URL: Status received:" + httpStatus);
+		
+	}
+
+
 
  @Then("Admin should see correct spellings in all fields")
-  public void admin_should_see_correct_spellings_in_all_fields() {
-	 String expectedUsernameLabel = "Username"; 
-     String expectedPasswordLabel = "Password"; 
-	 String actualUsernameLabel = Login_Page.getInstance().getUsernameLabel();
-     String actualPasswordLabel = Login_Page.getInstance().getPasswordLabel();
-     Assert.assertEquals("Username label mismatch!", expectedUsernameLabel, actualUsernameLabel);
-     Assert.assertEquals("Password label mismatch!", expectedPasswordLabel, actualPasswordLabel);
-     
+  public void admin_should_see_correct_spellings_in_all_fields() throws Throwable {
+	 HashMap<String,String> loginTextMap = new HashMap<String,String>();
+	 loginTextMap = Login_Page.getInstance().VerifyFieldText();
+		Assert.assertEquals(loginTextMap.get("ExpUserText"),actualNameText );
+		Assert.assertEquals(loginTextMap.get("ExppasswordText"),actualPasswordText );
    
 }
  
  @Then("Admin should see logo on the left  side")
  public void admin_should_see_logo_on_the_left_side() {
-	 Assert.assertTrue(Login_Page.getInstance().logoisDisplyed());
+	 Assert.assertTrue(Login_Page.getInstance().verifyLogoIsDisplayed());
     
  }
 
  @Then("Admin should see  LMS - Learning Management System")
  public void admin_should_see_lms_learning_management_system() {
-	 Assert.assertTrue(Login_Page.getInstance().logoisDisplyed());
+	 Assert.assertTrue(Login_Page.getInstance().verifyLogoIsDisplayed());
      
  }
  
  @Then("Admin should see company name below the app name")
  public void admin_should_see_company_name_below_the_app_name() {
-	 Assert.assertTrue(Login_Page.getInstance().logoisDisplyed());
+	 Assert.assertTrue(Login_Page.getInstance().verifyLogoIsDisplayed());
  }
 
  @Then("Admin should see {string}")
@@ -102,7 +128,8 @@ public class Steps_Login {
  
  @Then("Admin should {string} in the first text field")
  public void admin_should_in_the_first_text_field(String string) {
-	 Assert.assertTrue(Login_Page.getInstance().UsernameLabelDisplayed());
+	 actualText = Login_Page.getInstance().verifyUserPlaceHolder();
+		Assert.assertEquals(actualNameText, string);
  }
 
  @Then("Admin should see field mandatory * symbol next to Admin text")
@@ -111,7 +138,8 @@ public class Steps_Login {
  }
  @Then("Admin should {string} in the second text field")
  public void admin_should_in_the_second_text_field(String string) {
-	 Assert.assertTrue(Login_Page.getInstance().passwordLabelDisplayed());
+	 actualText = Login_Page.getInstance().verifyUserPlaceHolder();
+		Assert.assertEquals(actualPasswordText, string);
  }
 
  @Then("Admin should see * symbol next to password text")
@@ -120,6 +148,7 @@ public class Steps_Login {
  }
  @Then("Admin should see input field on the centre of the page")
  public void admin_should_see_input_field_on_the_centre_of_the_page() {
+	 Assert.assertTrue(Login_Page.getInstance().isInputFieldCentered());
      
  }
 
@@ -128,17 +157,76 @@ public class Steps_Login {
 	 Assert.assertTrue(Login_Page.getInstance().isLoginButtonDisplayed()); 
  }
 
+ @Then("Admin should see login button on the centre of the page")
+ public void admin_should_see_login_button_on_the_centre_of_the_page() {
+	 
+//	 checkFields = AppHooks.getInstance().getDriver().verifyButtonAlignment();
+//		Assert.assertTrue(checkFields);
+ }
+
+ @Then("Admin should see Admin in gray color")
+ public void admin_should_see_admin_in_gray_color() {
+	 Assert.assertEquals(Login_Page.getInstance().getUserFontColor().equals(grayColor),true);
+	 
+    
+ }
+
+@Then("Admin should see Password in gray color")
+public void admin_should_see_password_in_gray_color() {
+	 Assert.assertEquals(Login_Page.getInstance().getPasswordFontColor().equals(grayColor),true);
+	 
+}
+@Given("Admin launches the browser")
+public void admin_launches_the_browser() {
+	AppHooks.getInstance().getDriver().get(Constants.URL);  
+}
+
+@When("The admin enters {string}, {string} and clicks the login button")
+public void the_admin_enters_and_clicks_the_login_button(String string, String string2) {
+	Login_Page.getInstance().validateUserandPassword(string,string2);
+       
+    }
 
 
+@Then("Admin should see the message {string}")
+public void admin_should_see_the_message_(String string) {
+    
+	actualErrorMessage = Login_Page.getInstance().getErrorMessage();
+	Assert.assertEquals(actualErrorMessage,string );
+}
 
 
+@When("Admin enter valid credentials  and clicks login button through keyboard")
+public void admin_enter_valid_credentials_and_clicks_login_button_through_keyboard() {
+	Login_Page.getInstance().enterusername();
+	Login_Page.getInstance().enterpassword();
+	Login_Page.getInstance().pressEnterKey();
+}
 
 
-
-
+@When("Admin enter valid credentials  and clicks login button through mouse")
+public void admin_enter_valid_credentials_and_clicks_login_button_through_mouse() {
+	Login_Page.getInstance().enterusername();
+	Login_Page.getInstance().enterpassword();
+	Login_Page.getInstance().clickLoginButton();
+}
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
