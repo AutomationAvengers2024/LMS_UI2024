@@ -1,10 +1,12 @@
 package pages;
 
 import org.openqa.selenium.By;
+
 import org.testng.Assert;
 
 import app_hooks.AppHooks;
 import utilities.LoggerLoad;
+
 
 public class Common {
 	
@@ -144,7 +146,7 @@ public class Common {
 		
 		int totRows = AppHooks.getInstance().getDriver().findElements(TableElement).size();
 		System.out.println(totRows);
-		if (totRows==5)
+		if (totRows<=5)
 			LoggerLoad.info("Total Number of records displayed is "+totRows+" - As expected");
 		else
 			LoggerLoad.error("Total Number of records displayed is "+totRows+" - Not As expected");
@@ -236,6 +238,149 @@ public class Common {
 				LoggerLoad.error("Search Text Search... is not displayed - As expected");
 
 
-		}	
+		}
+		public void clickPaginatorNext(By PaginatorButtonElement)
+		{
+			boolean PaginatorNext = AppHooks.getInstance().getDriver().findElement(PaginatorButtonElement).isEnabled();
+			if(PaginatorNext)
+				LoggerLoad.info("Pagination - Next button is displayed - As expected");
+			else
+				LoggerLoad.error("Pagination - Next button is not displayed - As expected");
+			AppHooks.getInstance().getDriver().findElement(PaginatorButtonElement).click();
+			LoggerLoad.info("Pagination - Next button is clicked successfully");
 
-}
+		}
+		public void clickPaginatorLast(By PaginatorButtonElement)
+		{
+			boolean PaginatorLast = AppHooks.getInstance().getDriver().findElement(PaginatorButtonElement).isEnabled();
+			if(PaginatorLast)
+				LoggerLoad.info("Pagination - Last button is displayed - As expected");
+			else
+				LoggerLoad.error("Pagination - Last button is not displayed - As expected");
+			AppHooks.getInstance().getDriver().findElement(PaginatorButtonElement).click();
+			LoggerLoad.info("Pagination - Last button is clicked successfully");
+
+		}
+		public void clickPaginatorPrev(By PaginatorButtonElement)
+		{
+			boolean PaginatorPrev = AppHooks.getInstance().getDriver().findElement(PaginatorButtonElement).isEnabled();
+			if(PaginatorPrev)
+				LoggerLoad.info("Pagination - Previous button is displayed - As expected");
+			else
+				LoggerLoad.error("Pagination - Previous button is not displayed - As expected");
+			AppHooks.getInstance().getDriver().findElement(PaginatorButtonElement).click();
+			LoggerLoad.info("Pagination - Previous button is clicked successfully");
+
+		}
+		public void clickPaginatorFirst(By PaginatorButtonElement)
+		{
+			boolean PaginatorFirst = AppHooks.getInstance().getDriver().findElement(PaginatorButtonElement).isEnabled();
+			if(PaginatorFirst)
+				LoggerLoad.info("Pagination - First button is displayed - As expected");
+			else
+				LoggerLoad.error("Pagination - First button is not displayed - As expected");
+			AppHooks.getInstance().getDriver().findElement(PaginatorButtonElement).click();
+			LoggerLoad.info("Pagination - First button is clicked successfully");
+
+		}
+		
+		public void checkNextPagination(By PaginationElement)
+		{
+			String PaginationMessage = AppHooks.getInstance().getDriver().findElement(PaginationElement).getText();
+			if (PaginationMessage.startsWith("Showing 6 to"))
+				LoggerLoad.info("Pagination - Admin is able to navigate to Next Page - As expected");
+			else
+				LoggerLoad.error("Pagination - Admin is not able to navigate to Next Page - As expected");
+
+
+		}
+		public void checkLastPagination(By PaginationElement)
+		{
+			String PaginationMessage = AppHooks.getInstance().getDriver().findElement(PaginationElement).getText();
+			String[] arr = PaginationMessage.split("of ");
+			String[] TotalEntries = arr[1].split(" ");
+			String Total = TotalEntries[0];
+			String toCompare = " "+Total+" of "+Total+" entries";
+			
+			System.out.println(PaginationMessage.endsWith(toCompare));
+
+
+			if (PaginationMessage.endsWith(toCompare))
+				LoggerLoad.info("Pagination - Admin is able to navigate to Last Page - As expected");
+			else
+				LoggerLoad.error("Pagination - Admin is not able to navigate to Last Page - As expected");
+
+
+		}
+		public void checkPrevPagination(By PaginationElement)
+		{
+			String PaginationMessage = AppHooks.getInstance().getDriver().findElement(PaginationElement).getText();
+			String[] arr = PaginationMessage.split("of ");
+			String[] TotalEntries = arr[1].split(" ");
+			String Total = TotalEntries[0];
+			String toCompare = " "+Total+" entries";
+			if (PaginationMessage.endsWith(toCompare))
+				LoggerLoad.info("Pagination - Admin is able to navigate to Previous Page - As expected");
+			else
+				LoggerLoad.error("Pagination - Admin is not able to navigate to Previous Page - As expected");
+
+
+		}
+		public void checkFirstPagination(By PaginationElement)
+		{
+			String PaginationMessage = AppHooks.getInstance().getDriver().findElement(PaginationElement).getText();
+			if (PaginationMessage.startsWith("Showing 1 to"))
+				LoggerLoad.info("Pagination - Admin is able to navigate to First Page - As expected");
+			else
+				LoggerLoad.error("Pagination - Admin is not able to navigate to First Page - As expected");
+
+
+		}
+		
+		// ### Functions for sort icon -- Program
+		//Column can be Program Name, Program Description , Program Status for Program Module
+		public void Click_SortIcon(By SortIconElement,String Column)
+		{
+			//System.out.println(Column);
+			boolean progNameSortIcon = AppHooks.getInstance().getDriver().findElement(SortIconElement).isEnabled();
+			if(progNameSortIcon)
+				LoggerLoad.info("SortIcon - "+Column+" is displayed - As expected");
+			else
+				LoggerLoad.error("SortIcon - "+Column+" is not displayed - As expected");
+			AppHooks.getInstance().getDriver().findElement(SortIconElement).click();
+			LoggerLoad.info("Sort Icon - "+Column+" is clicked successfully");
+
+		}
+		
+		public void ValidateAscending_SortIcon(By SortIconElement, String Column) {
+			
+			String attribute = AppHooks.getInstance().getDriver().findElement(SortIconElement).getAttribute("aria-sort");
+			
+			//System.out.println(attribute);
+			boolean AscendingSortIcon  = attribute.contains("ascending");
+			if(AscendingSortIcon)
+				LoggerLoad.info("Ascending SortIcon - "+Column+" is displayed - As expected");
+			else
+				LoggerLoad.error("Ascending SortIcon - "+Column+" is not displayed - As expected");
+			
+
+			
+		}
+		public void ValidateDescending_SortIcon(By SortIconElement, String Column) {
+			String attribute = AppHooks.getInstance().getDriver().findElement(SortIconElement).getAttribute("aria-sort");
+			
+			//System.out.println(attribute);
+			boolean DescendingSortIcon = attribute.contains("descending");
+			if(DescendingSortIcon)
+				LoggerLoad.info("Descending SortIcon - "+Column+" is displayed - As expected");
+			else
+				LoggerLoad.error("Descending SortIcon - "+Column+" is not displayed - As expected");
+			
+
+			
+		}
+
+		}
+
+
+

@@ -89,6 +89,10 @@ public class Steps_ProgramValidation {
 		ProgramPage.getInstance().ValidateSearchBar();
 	}
 
-
+	@Then("Admin should see data table on the Manage Program Page with following column headers \\(Program Name, Program Description, Program Status, Edit,Delete)")
+	public void admin_should_see_data_table_on_the_manage_program_page_with_following_column_headers_program_name_program_description_program_status_edit_delete() {
+	    
+		ProgramPage.getInstance().Validate_ProgramTableHeaders();
+	}
 
 }
