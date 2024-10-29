@@ -39,7 +39,7 @@ When Admin enter valid credentials and clicks login button
   Scenario: Validate Add New Program 
    Given Admin is on dashboard page after Login
    When Admin clicks "Program" on the navigation bar
-   Then Admin should see a "+A New Program" button on the program page above the data table 
+   Then Admin should see a "+Add New Program" button on the program page above the data table 
 	
 	 @TS7
   Scenario: Validate that number of records (rows of data in the table) displayed 
@@ -71,3 +71,10 @@ When Admin enter valid credentials and clicks login button
    Given Admin is on dashboard page after Login
    When Admin clicks "Program" on the navigation bar
    Then Admin should see Search bar with text as "Search..."  
+   
+   
+   @TS12
+  Scenario: Verify data table on the Program page 
+   Given Admin is on dashboard page after Login
+   When Admin clicks "Program" on the navigation bar
+   Then Admin should see data table on the Manage Program Page with following column headers (Program Name, Program Description, Program Status, Edit,Delete) 
