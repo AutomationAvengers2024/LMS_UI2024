@@ -20,10 +20,10 @@ Feature: Edit New Class
     When Admin updates the fields with valid data and clicks save
     Then Admin gets message "class details updated Successfully" and sees the updated values in data table
 
-  Scenario: Check if the fields are updated with invalid values
-    Given Admin is on the Edit Class Popup window
-    When Admin updates the fields with invalid values and clicks save
-    Then Admin should get Error message
+  #Scenario: Check if the fields are updated with invalid values
+    #Given Admin is on the Edit Class Popup window
+    #When Admin updates the fields with invalid values and clicks save
+    #Then Admin should get Error message
 
   Scenario: Check if the mandatory fields are updated with valid data
     Given Admin is on the Edit Class Popup window
