@@ -1,16 +1,26 @@
 package pages;
 
 import org.openqa.selenium.By;
-
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import app_hooks.AppHooks;
 import utilities.LoggerLoad;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.time.Duration;
 
 
 public class Common {
 	
 	By LMSDashboardTitle = By.xpath("//span[normalize-space()='LMS - Learning Management System']");
+	
+	private WebDriver driver;
+	private WebDriverWait wait;
+	private WebElement element;
 	
 	
 	public void verifyDashboardPage()
@@ -376,9 +386,53 @@ public class Common {
 			else
 				LoggerLoad.error("Descending SortIcon - "+Column+" is not displayed - As expected");
 			
+}
+		
 
+		public class LinkValidator {
+		    public boolean validateLink(String urlString) {
+		        try {
+		            URL url = new URL(urlString);
+		            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		            connection.setRequestMethod("HEAD");
+		            connection.connect();
+		            return connection.getResponseCode() == 200; // Link is valid
+		        } catch (Exception e) {
+		            return false; // Link is broken
+		        }
+		    }
+
+		    public void main(String[] args) {
+		        String url = "http://example.com";
+		        System.out.println(validateLink(url) ? "The link is valid." : "The link is broken.");
+		    }
+		}
+
+		//General Function to Click Button
+		public void ClickBtn(String Xpath) {
+			AppHooks aphk = new AppHooks();
+			aphk.getDriver().manage().window().maximize();
+			aphk.getDriver().manage().window().fullscreen();
+						
+				
+			try {
+				Thread.sleep(4000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			By ClickBtn=By.xpath(Xpath);
+			
+			this.driver = AppHooks.getInstance().getDriver();
+			this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+			
+			WebElement element = driver.findElement(ClickBtn);
+            Actions action = new Actions(driver);
+            action.doubleClick(element).build().perform();		
 			
 		}
+		
 
 		}
 
