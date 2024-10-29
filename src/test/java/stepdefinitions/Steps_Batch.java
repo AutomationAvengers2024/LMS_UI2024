@@ -6,7 +6,7 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import pages.BatchPage;
+import pages.Batch_Page;
 import pages.Login_Page;
 import pages.Logout_Page;
 
@@ -17,7 +17,7 @@ import org.openqa.selenium.WebElement;
 
 public class Steps_Batch {
 
-	private BatchPage batchPage = new BatchPage();
+	private Batch_Page batchPage = new Batch_Page();
 
 	@Given("Admin is on the Dashboard Page after login")
 	public void admin_is_on_the_dashboard_page_after_login() {
