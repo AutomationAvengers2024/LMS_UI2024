@@ -2,7 +2,6 @@ Feature: Class Page Validation
 
   Background: 
     
-
   Scenario: Validating the class manage page
     Given Admin is logged on the Dashboard page
     When Admin clicks the Class Navigation bar in the Header
@@ -47,4 +46,5 @@ Feature: Class Page Validation
     Given Admin is on the dashboard page after login
     When Admin clicks the Class Navigation bar in the Header
     Then Admin should see Total number of classes below the data table
-
+    
+    
