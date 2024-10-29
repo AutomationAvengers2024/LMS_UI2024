@@ -1,52 +1,40 @@
-Feature: Add New Class
+Feature: Manage Class Functionality
 
   Background: 
-    Given Admin is on the Manage class page after login
+    Given Admin is on the Manage Class page after Valid Login
 
-  Scenario: Validate Class Details Popup window
-    When Admin clicks add new class under the class menu bar
-    Then Admin should see a popup open for class details with an empty form along with  and  button and Close(X) Icon on the top right corner of the window
+  Scenario: Search for classes
+    When Admin enters the Batch Name in the search textbox
+    Then Admin should see Class details are searched by Batch Name
 
-  Scenario: Validate input fields and their text boxes in Class details form
-    When Admin clicks add new class under the class menu bar
-    Then Admin should see few input fields and their respective text boxes in the class details window
+    When Admin enters the Class topic in the search textbox
+    Then Admin should see Class details are searched by Class topic
 
-  Scenario: Check if class is created when only mandatory fields are entered with valid data
-    Given Admin is on the Class Popup window
-    When Admin enters mandatory fields in the form and clicks on save button
-    Then Admin gets message "Class added Successfully"
+    When Admin enters the Staff Name in the search textbox
+    Then Admin should see Class details are searched by Staff Name
 
-  Scenario: Check no classes value added when selecting class dates
-    Given Admin is on the Class Popup window
-    When Admin selects class date in date picker
-    Then Admin should see number of class value is added automatically
+  Scenario: Pagination functionality
+    When Admin clicks Next page link on the class table
+    Then Admin should see the next page record on the table with Pagination has next active link enabled
 
-  Scenario: Check weekend dates are disabled in calendar
-    Given Admin is on the Class Popup window
-    When Admin clicks date picker
-    Then Admin should see weekends dates are disabled to select
+    When Admin clicks Last page link
+    Then Admin should see the last page record on the table with Next page link disabled
 
-  Scenario: Check if class is created when only optional fields are entered with valid data
-    Given Admin is on the Class Popup window
-    When Admin skips to add value in mandatory field and enters only the optional field
-    Then Admin should see error message below the text field and the field will be highlighted in red color
+    Given Admin is on the last page of the class table
+    When Admin clicks First page link
+    Then Admin should see the previous page record on the table with pagination has previous page link enabled
 
-  Scenario: Check if class is created when invalid data is entered in all of the fields
-    Given Admin is on the Class Popup window
-    When Admin enters invalid data in all of the fields in the form and clicks on save button
-    Then Admin gets error message and class is not created
+    Given Admin is on a previous class page
+    When Admin clicks Start page link
+    Then Admin should see the very first page record on the table with Previous page link disabled
 
-  Scenario: Empty form submission
-    Given Admin is on the Class Popup window
-    When Admin clicks on save button without entering data
-    Then class won't be created and Admin gets error message
+  Scenario: Navigation validation
+    Given Admin is on the dashboard page after login and clicks Class on the navigation bar
+    When Admin clicks on Class link on Manage Class page
+    Then Admin is re-directed to the class page
 
-  Scenario: Validate Cancel/Close(X) icon on class Details form
-    Given Admin is on the Class Popup window
-    When Admin clicks Cancel/Close(X) Icon on Admin Details form
-    Then Class Details popup window should be closed without saving
+    When Admin clicks on any module link on Manage Class page
+    Then Admin is re-directed to the module link they clicked
 
-  Scenario: Validate Save button on class Details form
-    Given Admin is on the Class Popup window
-    When Admin clicks save button
-    Then Admin can see the class details popup closed and adding new class
+    When Admin clicks on Logout link on Manage Class page
+    Then Admin is re-directed to the Login page
