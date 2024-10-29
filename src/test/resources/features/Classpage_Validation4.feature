@@ -1,7 +1,7 @@
 Feature: Sort Class details
 
   Background: 
-    Given Admin is on the Manage Class page after login
+    Given Admin is on the Manage Class page after logingin
 
   Scenario: Sort Class by Batch name
     When Admin clicks on the Batchname sort icon
