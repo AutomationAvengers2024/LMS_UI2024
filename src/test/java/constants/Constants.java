@@ -12,6 +12,8 @@ public class Constants {
 
     public static String INVALIDURL;
     public static String PROGRAMPAGEURL;
+
+	public static String CLASSPAGEURL;
   
 
 
