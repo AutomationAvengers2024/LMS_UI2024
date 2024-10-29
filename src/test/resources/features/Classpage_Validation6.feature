@@ -1,7 +1,7 @@
 Feature: Manage Class Functionality
 
   Background: 
-    Given Admin is on the Manage Class page after login
+    Given Admin is on the Manage Class page after Valid Login
 
   Scenario: Search for classes
     When Admin enters the Batch Name in the search textbox

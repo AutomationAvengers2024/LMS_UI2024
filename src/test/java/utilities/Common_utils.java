@@ -47,6 +47,7 @@ public class Common_utils {
 			    Constants.USER= properties.getProperty("user");
 			    Constants.PASSWORD= properties.getProperty("password");
 			    Constants.PROGRAMPAGEURL=properties.getProperty("programurl");
+				Constants.CLASSPAGEURL=properties.getProperty("classurl");
                 
 				
 				
